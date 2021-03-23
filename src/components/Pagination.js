@@ -1,6 +1,6 @@
 import React from 'react'
 import Pagination from '@material-ui/lab/Pagination';
-import { TextField, Button } from '@material-ui/core';
+import { TextField, Button, Dialog } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles'
 
 const useStyles = makeStyles(theme => ({
@@ -35,11 +35,16 @@ export default (props) => {
         inputNum(page);
     };
     const handleClick = (e) => {
-        props.onChange(e, inputPage);
-        setPage(inputPage);
+        if(inputPage>0&&inputPage<=props.count){
+            props.onChange(e, inputPage);
+            setPage(inputPage);
+        } else {
+            console.log('out of index')
+        }
     }
     const handleInputChange = (e)=>{
-        inputNum(parseInt(e.target.value,10))
+        if(e.target.value==='')inputNum();
+        else inputNum(parseInt(e.target.value,10));
     }
 
     return (
