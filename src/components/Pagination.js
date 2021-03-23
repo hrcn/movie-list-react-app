@@ -38,12 +38,19 @@ export default (props) => {
         if(inputPage>0&&inputPage<=props.count){
             props.onChange(e, inputPage);
             setPage(inputPage);
+        } else if (inputPage<=0){
+            props.onChange(e, 1);
+            setPage(1);
+            inputNum(1);
         } else {
-            console.log('out of index')
+            props.onChange(e, props.count);
+            setPage(props.count);
+            inputNum(props.count);
         }
     }
     const handleInputChange = (e)=>{
         if(e.target.value==='')inputNum();
+        else if (e.target.value==='-') inputNum();
         else inputNum(parseInt(e.target.value,10));
     }
 
