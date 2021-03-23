@@ -49,9 +49,11 @@ export default (props) => {
         }
     }
     const handleInputChange = (e)=>{
-        if(e.target.value==='')inputNum();
-        else if (e.target.value==='-') inputNum();
-        else inputNum(parseInt(e.target.value,10));
+        if(Number.isInteger(parseInt(e.target.value,10)))inputNum(parseInt(e.target.value,10));
+        else inputNum();
+        // if(e.target.value==='')inputNum();
+        // else if (e.target.value==='-') inputNum();
+        // else inputNum(parseInt(e.target.value,10));
     }
 
     return (
