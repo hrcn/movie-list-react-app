@@ -3,10 +3,20 @@ import { Link } from 'react-router-dom'
 // styling
 import { AppBar, Toolbar, Button } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
+import logo from '../assets/images/logo.png'
 
 const useStyles = makeStyles(theme => ({
+  appbar: {
+    background: '#00BFFF'
+  },
   button: {
-    margin: theme.spacing(2)
+    margin: theme.spacing(2),
+    '&:hover': {
+      background: '#4682B4'
+    }
+  },
+  logo: {
+    width: '3rem'
   }
 }))
 
@@ -14,8 +24,9 @@ function Nav() {
   const classes = useStyles()
 
   return (
-    <AppBar position="static">
+    <AppBar className={classes.appbar} position="static">
       <Toolbar>
+        <img className={classes.logo} src={logo} alt="logo" />
         <Button className={classes.button} component={Link} to="/" color="inherit" size="small">
           Home
         </Button>
