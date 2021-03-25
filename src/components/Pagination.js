@@ -5,10 +5,13 @@ import { makeStyles } from '@material-ui/core/styles'
 
 const useStyles = makeStyles(theme => ({
     bar: {
+        position: 'relative',
+        left: '25%',
         display: 'flex',
-        justifyContent: 'center',
+        float: 'left',
     },
     pagination: {
+        display: 'inline',
         height: '2rem',
     },
     pageInput: {
@@ -16,9 +19,9 @@ const useStyles = makeStyles(theme => ({
         height: '3rem',
     },
     inputButton: {
+        display: 'inline',
         height: '3rem',
         marginLeft: '1rem',
-        float: 'left',
         '&:hover': {
             background: '#4682B4'
         }
