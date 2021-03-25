@@ -16,7 +16,9 @@ const styles = {
 
 function MovieCarousel({ movieData }) {
   return (
+    
     <Container style={styles.container}>
+      {console.log(movieData)}
       <Carousel style={styles.box}>
         {
           movieData.map(element => <CarouselItem key={element.id} element={element} />)
