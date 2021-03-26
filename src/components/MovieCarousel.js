@@ -1,5 +1,6 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 import CarouselItem from './CarouselItem'
+import MovieModal from './MovieModal'
 
 import Carousel from 'react-material-ui-carousel'
 import { Container } from '@material-ui/core'
@@ -14,14 +15,17 @@ const styles = {
   }
 }
 
-function MovieCarousel({ movieData }) {
+function MovieCarousel({ movieData, modalOpen, setModalOpen }) {
   return (
-    
     <Container style={styles.container}>
-      {console.log(movieData)}
       <Carousel style={styles.box}>
         {
-          movieData.map(element => <CarouselItem key={element.id} element={element} />)
+          movieData.map(element => (
+            <Fragment key={element.id}>
+              <CarouselItem  element={element} setModalOpen={setModalOpen} />
+              <MovieModal currentMovie={element} modalOpen={modalOpen} setModalOpen={setModalOpen} />
+            </Fragment>
+          ))
         }
       </Carousel>
     </Container>
