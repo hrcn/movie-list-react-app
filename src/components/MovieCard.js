@@ -73,7 +73,7 @@ export default function MediaCard(props) {
                 <CardMedia
                     className={classes.media}
                     image={`${url}${movie.poster_path}`}
-                    title="Contemplative Reptile"
+                    title={movie.title}
                 />
                 <CardContent className="texts">
                     <Typography gutterBottom variant="h5" component="h2">
@@ -86,7 +86,7 @@ export default function MediaCard(props) {
             </CardActionArea>
             <CardActions className="buttons" style={styles.animationStyle}>
                 <Button size="small" color="primary">
-                    {likeList.includes(movie.id) ? <DeleteIcon /> : <Favorite />}
+                    {likeList.includes(movie.id) ? <DeleteIcon /> : <Favorite label="like"/>}
                 </Button>
                 <Button size="small" color="primary">
                     {blockList.includes(movie.id) ? <DeleteIcon /> : <BlockIcon />}
