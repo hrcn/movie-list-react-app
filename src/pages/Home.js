@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
+import MovieCard from '../components/MovieCard'
 
 import MovieCarousel from '../components/MovieCarousel'
 
@@ -25,7 +26,7 @@ function Home() {
 
   return (
     <Box style={styles.box}>
-      <MovieCarousel movieData={movieData} />
+      <MovieCard movieData={movieData[1]} />
     </Box>
   )
 }
