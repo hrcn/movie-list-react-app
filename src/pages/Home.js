@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
-import MovieCard from '../components/MovieCard'
-
 import MovieCarousel from '../components/MovieCarousel'
 
 import { Box } from '@material-ui/core'
@@ -26,7 +24,7 @@ function Home() {
 
   return (
     <Box style={styles.box}>
-      <MovieCard movieData={movieData[1]} />
+      <MovieCarousel movieData={movieData} />
     </Box>
   )
 }
