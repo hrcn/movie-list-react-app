@@ -10,16 +10,14 @@ let url = `https://api.themoviedb.org/3/discover/movie?api_key=ef30f4e9c750cffe1
 const useStyles = makeStyles(theme => ({
   contents: {
     margin: '1rem',
+    display: 'inline',
   },
-  sections: {
-    display: 'block',
-  }
-
 }))
 
 function MovieList() {
-    const classes = useStyles()
-    const [movieData, setMovieData] = React.useState([])
+  const classes = useStyles()
+  const [modalOpen, setModalOpen] = React.useState(false)
+  const [movieData, setMovieData] = React.useState([])
   // const [blockList,setBlockList] = React.useState()
   React.useEffect(() => {
     axios.get(url)
@@ -27,7 +25,7 @@ function MovieList() {
       .catch(err => console.log(err))
   }, [])
 
-  const handleChangePage = (e,page) => {
+  const handleChangePage = (e, page) => {
     let newurl = `${url}${page}`
     axios.get(newurl)
       .then(res => setMovieData(res.data.results))
@@ -35,12 +33,10 @@ function MovieList() {
   }
 
   return (
-    <section className={classes.contents}>
-      <MovieListBlock movies={movieData}/>
-      <div>
+    <div className={classes.contents}>
+      <MovieListBlock movies={movieData} modalOpen={modalOpen} setModalOpen={setModalOpen} />
       <Pagination count={15} onChange={handleChangePage} />
-      </div>
-    </section>
+    </div>
   )
 }
 

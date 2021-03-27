@@ -14,9 +14,11 @@ import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 
 const useStyles = makeStyles({
     root: {
-        width: 350,
+        width: '21%',
         margin: 10,
         height: 570,
+        display: 'inline',
+        float: 'left',
         '& .area': {
             height: 550,
         },
@@ -30,7 +32,7 @@ const useStyles = makeStyles({
         },
         '&:hover': {
             '& .area': {
-                transform: 'translateY(-10%)',
+                transform: 'translateY(-20%)',
             },
             '& .buttons': {
                 transform: 'translateY(-50%)',
@@ -48,10 +50,10 @@ const styles = {
     }
   }
 
-export default function MediaCard(props) {
+export default function MovieCard(props) {
     const classes = useStyles();
     const movie = props.movieData;
-    console.log(movie);
+    console.log(movie.id);
     const url = "https://image.tmdb.org/t/p/w500";
     const likeList = [];
     const blockList = [];
@@ -69,7 +71,7 @@ export default function MediaCard(props) {
         );
     return (
         <Card className={classes.root} >
-            <CardActionArea className="area" style={styles.animationStyle}>
+            <CardActionArea className="area" style={styles.animationStyle} onClick={() => props.setModalOpen(true)}> 
                 <CardMedia
                     className={classes.media}
                     image={`${url}${movie.poster_path}`}
@@ -91,7 +93,7 @@ export default function MediaCard(props) {
                 <Button size="small" color="primary">
                     {blockList.includes(movie.id) ? <DeleteIcon /> : <BlockIcon />}
                 </Button>
-                <Button size="small" color="primary">
+                <Button size="small" color="primary" onClick={() => props.setModalOpen(true)}> 
                     <MoreHorizIcon />
                 </Button>
             </CardActions>
