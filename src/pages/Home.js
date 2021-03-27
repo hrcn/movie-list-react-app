@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
-
 import MovieCarousel from '../components/MovieCarousel'
 
 import { Box } from '@material-ui/core'
