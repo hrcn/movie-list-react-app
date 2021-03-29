@@ -13,6 +13,9 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 import {connect} from 'react-redux';
 import { addLikes } from '../redux/actions/addLikes';
+import { removeLikes } from '../redux/actions/removeLikes';
+import { addBlocks } from '../redux/actions/addBlocks';
+import { removeBlocks } from '../redux/actions/removeBlocks';
 
 const useStyles = makeStyles({
     root: {
@@ -34,7 +37,7 @@ const useStyles = makeStyles({
         },
         '&:hover': {
             '& .area': {
-                transform: 'translateY(-20%)',
+                transform: 'translateY(-50%)',
             },
             '& .buttons': {
                 transform: 'translateY(-50%)',
@@ -56,7 +59,6 @@ function MovieCard(props) {
     const classes = useStyles();
     const movie = props.movieData;
     const url = "https://image.tmdb.org/t/p/w500";
-    const blockList = [];
     if (!movie)
         return (
             <Card className={classes.root}>
@@ -70,7 +72,7 @@ function MovieCard(props) {
             </Card>
         );
     return (
-        <Card className={classes.root} >
+        <Card className={classes.root}>
             <CardActionArea className="area" style={styles.animationStyle} onClick={() => props.setModalOpen(true)}> 
                 <CardMedia
                     className={classes.media}
@@ -88,10 +90,14 @@ function MovieCard(props) {
             </CardActionArea>
             <CardActions className="buttons" style={styles.animationStyle}>
                 <Button size="small" color="primary">
-                    {props.likelist.includes(movie.id) ? <DeleteIcon /> : <Favorite label="like" onClick={()=>props.addLikes(movie.id)} />}
+                    {props.likelist.includes(movie.id) ? 
+                    <DeleteIcon onClick={()=>props.removeLikes(movie.id)}  /> : 
+                    <Favorite label="like" onClick={()=>{props.addLikes(movie.id);props.removeBlocks(movie.id)}} />}
                 </Button>
                 <Button size="small" color="primary">
-                    {blockList.includes(movie.id) ? <DeleteIcon /> : <BlockIcon />}
+                    {props.blocklist.includes(movie.id) ?
+                     <DeleteIcon onClick={()=>props.removeBlocks(movie.id)}/> : 
+                     <BlockIcon onClick={()=>{props.addBlocks(movie.id);props.removeLikes(movie.id)}} />}
                 </Button>
                 <Button size="small" color="primary" onClick={() => props.setModalOpen(true)}> 
                     <MoreHorizIcon />
@@ -104,12 +110,16 @@ function MovieCard(props) {
 const MapStateToProps = (state) => {
     return {
       likelist: state.LikelistReducer.likelist,
+      blocklist: state.BlocklistReducer.blocklist,
     };
   };
   
   const MapDispatchToProps = (dispatch) => {
     return {
       addLikes: (id)=>dispatch(addLikes(id)),
+      removeLikes: (id)=>dispatch(removeLikes(id)),
+      addBlocks: (id)=>dispatch(addBlocks(id)),
+      removeBlocks: (id)=>dispatch(removeBlocks(id)),
     };
   };
   

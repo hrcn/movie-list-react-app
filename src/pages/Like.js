@@ -8,7 +8,8 @@ import { makeStyles } from '@material-ui/core/styles';
 // import MovieBlock from ''
 
 let url = `https://api.themoviedb.org/3/discover/movie?api_key=ef30f4e9c750cffe15946a29e54f094e&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1`
-
+let url1 = 'https://api.themoviedb.org/3/movie/'; 
+let url2 = '?api_key=ef30f4e9c750cffe15946a29e54f094e&language=en-US'; 
 const useStyles = makeStyles(theme => ({
   contents: {
     margin: '1rem',
@@ -23,9 +24,14 @@ function Like(props) {
   console.log(props.likelist);
   // props.addLikes(12345);
   React.useEffect(() => {
-    axios.get(url)
-      .then(res => setMovieData(res.data.results))
+    props.likelist.map((element)=>{
+      let tempurl = `${url1}${element}${url2}`;
+      axios.get(tempurl)
+      .then(res => {
+        setMovieData([...movieData,res.data]);
+      })
       .catch(err => console.log(err))
+    })
   }, [])
 
   const handleChangePage = (e, page) => {
@@ -40,7 +46,6 @@ function Like(props) {
       <MovieListBlock movies={movieData} 
       modalOpen={modalOpen} 
       setModalOpen={setModalOpen} />
-      <Pagination count={15} onChange={handleChangePage} />
     </div>
   )
 }
