@@ -1,6 +1,6 @@
 import React from 'react'
 import Pagination from '@material-ui/lab/Pagination';
-import { TextField, Button, Dialog } from '@material-ui/core';
+import { TextField, Button } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles'
 
 const useStyles = makeStyles(theme => ({
@@ -28,7 +28,7 @@ const useStyles = makeStyles(theme => ({
     },
 }))
 
-export default (props) => {
+export default function MVPagination (props){
     const classes = useStyles();
     const [currentPage, setPage] = React.useState(1);
     const [inputPage, inputNum] = React.useState(currentPage);

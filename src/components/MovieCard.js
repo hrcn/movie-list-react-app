@@ -46,14 +46,13 @@ const useStyles = makeStyles({
 
 const styles = {
     animationStyle: {
-        'transition-duration': '1s',
+        'transitionDuration': '1s',
     }
   }
 
 export default function MovieCard(props) {
     const classes = useStyles();
     const movie = props.movieData;
-    console.log(movie.id);
     const url = "https://image.tmdb.org/t/p/w500";
     const likeList = [];
     const blockList = [];

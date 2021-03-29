@@ -15,7 +15,7 @@ const useStyles = makeStyles(theme => ({
 }))
 
 
-export default (props) => {
+export default function MovieList(props) {
     const classes = useStyles()
     const movies = props.movies;
     // const BlockList = [];
