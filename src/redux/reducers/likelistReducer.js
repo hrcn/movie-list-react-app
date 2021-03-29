@@ -10,6 +10,7 @@ const defaultState = {
 const likelistReducer = (state = defaultState, { type, payload }) => {
     switch (type) {
         case ADD_LIKES:
+            if (!state.likelist.includes(payload))
             return { 
                 ...state,
                 likelist: [...state.likelist, payload]

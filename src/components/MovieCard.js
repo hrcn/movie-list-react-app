@@ -11,6 +11,8 @@ import Favorite from "@material-ui/icons/Favorite";
 import BlockIcon from '@material-ui/icons/Block';
 import DeleteIcon from '@material-ui/icons/Delete';
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
+import {connect} from 'react-redux';
+import { addLikes } from '../redux/actions/addLikes';
 
 const useStyles = makeStyles({
     root: {
@@ -50,11 +52,10 @@ const styles = {
     }
   }
 
-export default function MovieCard(props) {
+function MovieCard(props) {
     const classes = useStyles();
     const movie = props.movieData;
     const url = "https://image.tmdb.org/t/p/w500";
-    const likeList = [];
     const blockList = [];
     if (!movie)
         return (
@@ -87,7 +88,7 @@ export default function MovieCard(props) {
             </CardActionArea>
             <CardActions className="buttons" style={styles.animationStyle}>
                 <Button size="small" color="primary">
-                    {likeList.includes(movie.id) ? <DeleteIcon /> : <Favorite label="like"/>}
+                    {props.likelist.includes(movie.id) ? <DeleteIcon /> : <Favorite label="like" onClick={()=>props.addLikes(movie.id)} />}
                 </Button>
                 <Button size="small" color="primary">
                     {blockList.includes(movie.id) ? <DeleteIcon /> : <BlockIcon />}
@@ -99,3 +100,17 @@ export default function MovieCard(props) {
         </Card>
     );
 }
+
+const MapStateToProps = (state) => {
+    return {
+      likelist: state.LikelistReducer.likelist,
+    };
+  };
+  
+  const MapDispatchToProps = (dispatch) => {
+    return {
+      addLikes: (id)=>dispatch(addLikes(id)),
+    };
+  };
+  
+  export default connect(MapStateToProps, MapDispatchToProps)(MovieCard);
