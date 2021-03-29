@@ -2,8 +2,6 @@ import React from 'react'
 import Pagination from '../components/Pagination'
 import MovieListBlock from '../components/MovieList'
 import axios from 'axios'
-import {connect} from 'react-redux';
-import { addLikes } from '../redux/actions/addLikes';
 import { makeStyles } from '@material-ui/core/styles';
 // import MovieBlock from ''
 
@@ -21,7 +19,6 @@ function MovieList(props) {
   const [modalOpen, setModalOpen] = React.useState(false)
   const [movieData, setMovieData] = React.useState([])
   // console.log(props.likelist);
-  // props.addLikes(12345);
   React.useEffect(() => {
     axios.get(url)
       .then(res => setMovieData(res.data.results))
@@ -45,16 +42,4 @@ function MovieList(props) {
   )
 }
 
-const MapStateToProps = (state) => {
-  return {
-    likelist: state.LikelistReducer.likelist,
-  };
-};
-
-const MapDispatchToProps = (dispatch) => {
-  return {
-    addLikes: (id)=>dispatch(addLikes(id)),
-  };
-};
-
-export default connect(MapStateToProps, MapDispatchToProps)(MovieList);
+export default MovieList;
