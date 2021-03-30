@@ -1,50 +1,55 @@
-import React from 'react'
-import MovieListBlock from '../components/MovieList'
-import axios from 'axios'
-import { connect } from 'react-redux';
-import { makeStyles } from '@material-ui/core/styles';
+import React from "react";
+import MovieListBlock from "../components/MovieList";
+import axios from "axios";
+import { connect } from "react-redux";
+import { makeStyles } from "@material-ui/core/styles";
 // import MovieBlock from ''
 
-let url1 = 'https://api.themoviedb.org/3/movie/';
-let url2 = '?api_key=ef30f4e9c750cffe15946a29e54f094e&language=en-US';
-const useStyles = makeStyles(theme => ({
+let url1 = "https://api.themoviedb.org/3/movie/";
+let url2 = "?api_key=ef30f4e9c750cffe15946a29e54f094e&language=en-US";
+const useStyles = makeStyles((theme) => ({
   contents: {
-    margin: '1rem',
-    display: 'inline',
+    margin: "1rem",
+    display: "inline",
   },
-}))
+}));
 
 function Block(props) {
-  const classes = useStyles()
-  const [modalOpen, setModalOpen] = React.useState(false)
-  const [movieData, setMovieData] = React.useState([])
+  const classes = useStyles();
+  const [modalOpen, setModalOpen] = React.useState(false);
+  const [movieData, setMovieData] = React.useState([]);
 
   React.useEffect(() => {
     let data = [];
     props.blocklist.map((element) => {
       let tempurl = `${url1}${element}${url2}`;
-      axios.get(tempurl)
-        .then(res => {
+      axios
+        .get(tempurl)
+        .then((res) => {
           data = [...data, res.data];
           setMovieData(data);
         })
-        .catch(err => console.log(err))
-    })
-  }, [])
+        .catch((err) => console.log(err));
+    });
+  }, []);
 
   React.useEffect(() => {
-    let newData = movieData.filter(movie=>props.blocklist.includes(movie.id));
+    let newData = movieData.filter((movie) =>
+      props.blocklist.includes(movie.id)
+    );
     console.log(newData);
     setMovieData(newData);
-  },[props.blocklist])
+  }, [props.blocklist]);
 
   return (
     <div className={classes.contents}>
-      <MovieListBlock movies={movieData}
+      <MovieListBlock
+        movies={movieData}
         modalOpen={modalOpen}
-        setModalOpen={setModalOpen} />
+        setModalOpen={setModalOpen}
+      />
     </div>
-  )
+  );
 }
 
 const MapStateToProps = (state) => {
@@ -55,8 +60,7 @@ const MapStateToProps = (state) => {
 };
 
 const MapDispatchToProps = (dispatch) => {
-  return {
-  };
+  return {};
 };
 
 export default connect(MapStateToProps, MapDispatchToProps)(Block);
