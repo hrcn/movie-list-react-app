@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { Container } from "@material-ui/core";
 import MovieModal from "./MovieModal";
@@ -15,23 +15,23 @@ const useStyles = makeStyles((theme) => ({
 export default function MovieList(props) {
   const classes = useStyles();
   const movies = props.movies;
+  const [currentMovie, setCurrentMovie] = useState({});
   // const BlockList = [];
   return (
     <Container className={classes.movielist}>
       {movies.map((element) => (
-        <Fragment key={element.id}>
-          <MovieCard
-            movieData={element}
-            className={classes.movie}
-            setModalOpen={props.setModalOpen}
-          />
-          <MovieModal
-            currentMovie={element}
-            modalOpen={props.modalOpen}
-            setModalOpen={props.setModalOpen}
-          />
-        </Fragment>
+        <MovieCard
+          movieData={element}
+          className={classes.movie}
+          setModalOpen={props.setModalOpen}
+          setCurrentMovie={setCurrentMovie}
+        />
       ))}
+      <MovieModal
+        currentMovie={currentMovie}
+        modalOpen={props.modalOpen}
+        setModalOpen={props.setModalOpen}
+      />
     </Container>
   );
 }

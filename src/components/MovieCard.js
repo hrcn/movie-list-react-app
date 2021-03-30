@@ -76,7 +76,10 @@ function MovieCard(props) {
       <CardActionArea
         className="area"
         style={styles.animationStyle}
-        onClick={() => props.setModalOpen(true)}
+        onClick={() => {
+          props.setModalOpen(true);
+          props.setCurrentMovie(movie);
+        }}
       >
         <CardMedia
           className={classes.media}
