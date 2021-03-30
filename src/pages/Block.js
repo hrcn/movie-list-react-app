@@ -34,7 +34,6 @@ function Block(props) {
 
   React.useEffect(() => {
     let newData = movieData.filter(movie=>props.blocklist.includes(movie.id));
-    console.log(newData);
     setMovieData(newData);
   },[props.blocklist])
 

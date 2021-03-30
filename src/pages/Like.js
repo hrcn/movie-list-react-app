@@ -34,7 +34,6 @@ function Like(props) {
 
   React.useEffect(() => {
     let newData = movieData.filter(movie=>props.likelist.includes(movie.id));
-    console.log(newData);
     setMovieData(newData);
   },[props.likelist])
 
