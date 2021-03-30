@@ -15,15 +15,16 @@ const blocklistReducer = (state = defaultState, { type, payload }) => {
                     ...state,
                     blocklist: [...state.blocklist, payload]
                 }
+            return state
         case REMOVE_BLOCKS:
-            if (state.blocklist.includes(payload)){
-                let idx = state.blocklist.indexOf(payload);
+            if (state.blocklist.includes(payload)) {
+                let temp = state.blocklist.filter(id => id !== payload);
                 return {
                     ...state,
-                    blocklist: state.blocklist.splice(idx,idx)
+                    blocklist: temp
                 }
             }
-                
+            return state
         default:
             return state
     };

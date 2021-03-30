@@ -15,15 +15,16 @@ const likelistReducer = (state = defaultState, { type, payload }) => {
                     ...state,
                     likelist: [...state.likelist, payload]
                 }
+            return state
         case REMOVE_LIKES:
-            if (state.likelist.includes(payload)){
-                let idx = state.likelist.indexOf(payload);
+            if (state.likelist.includes(payload)) {
+                let temp = state.likelist.filter(id=>id!==payload);
                 return {
                     ...state,
-                    likelist: state.likelist.splice(idx,idx)
+                    likelist: temp
                 }
             }
-                
+            return state
         default:
             return state
     };
