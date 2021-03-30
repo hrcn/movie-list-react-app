@@ -1,36 +1,37 @@
-import React from 'react'
-import { makeStyles } from '@material-ui/core/styles'
+import React, { Fragment, useState } from "react";
+import { makeStyles } from "@material-ui/core/styles";
+import { Container } from "@material-ui/core";
+import MovieModal from "./MovieModal";
+import MovieCard from "./MovieCard";
 
-const useStyles = makeStyles(theme => ({
-    movielist: {
-    },
-    movie: {
-        float: 'left',
-        height: '3rem',
-        width: '20%',
-        margin: '2%',
-    }
+const useStyles = makeStyles((theme) => ({
+  movielist: {},
+  movie: {
+    height: "2rem",
+    width: "20%",
+  },
+}));
 
-}))
-
-
-export default (props) => {
-    const classes = useStyles()
-    const movies = props.movies;
-    const BlockList = [];
-    let element = document.getElementById('movies');
-    if (element) element.innerHTML = "";
-    movies.forEach(movie => {
-        if (!BlockList.includes(movie.id)) {
-            let movieNode = document.createElement('div');
-            movieNode.innerText = `${movie.title}`;
-            movieNode.className = `${classes.movie}`;
-            element.appendChild(movieNode);
-        }
-    });
-
-    return (
-        <section id="movies" className={classes.movielist}>
-        </section>
-    )
+export default function MovieList(props) {
+  const classes = useStyles();
+  const movies = props.movies;
+  const [currentMovie, setCurrentMovie] = useState({});
+  // const BlockList = [];
+  return (
+    <Container className={classes.movielist}>
+      {movies.map((element) => (
+        <MovieCard
+          movieData={element}
+          className={classes.movie}
+          setModalOpen={props.setModalOpen}
+          setCurrentMovie={setCurrentMovie}
+        />
+      ))}
+      <MovieModal
+        currentMovie={currentMovie}
+        modalOpen={props.modalOpen}
+        setModalOpen={props.setModalOpen}
+      />
+    </Container>
+  );
 }

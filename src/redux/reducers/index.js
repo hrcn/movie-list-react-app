@@ -1,10 +1,12 @@
-import { combineReducers } from 'redux'
-import MoviesReducer from './movie_reducer';
+import { combineReducers } from "redux";
+import BlocklistReducer from "./blocklistReducer";
+import LikelistReducer from "./likelistReducer";
 
 // import all the reducers
 
 const allReducers = combineReducers({
-    MoviesReducer,
-})
+	BlocklistReducer,
+	LikelistReducer,
+});
 
-export default allReducers
+export default allReducers;
