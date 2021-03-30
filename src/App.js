@@ -1,15 +1,15 @@
-import React from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
-import {connect} from 'react-redux';
+import React from "react";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { connect } from "react-redux";
 // pages
-import Home from './pages/Home'
-import MovieList from './pages/MovieList'
-import Like from './pages/Like'
-import Block from './pages/Block'
+import Home from "./pages/Home";
+import MovieList from "./pages/MovieList";
+import Like from "./pages/Like";
+import Block from "./pages/Block";
 //actions
-import {addLikes} from './redux/actions/addLikes';
+import { addLikes } from "./redux/actions/addLikes";
 // components
-import Nav from './components/Nav'
+import Nav from "./components/Nav";
 
 function App(props) {
   return (
@@ -34,7 +34,7 @@ const MapStateToProps = (state) => {
 
 const MapDispatchToProps = (dispatch) => {
   return {
-    addLikes: (id)=>dispatch(addLikes(id)),
+    addLikes: (id) => dispatch(addLikes(id)),
   };
 };
 

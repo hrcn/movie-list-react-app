@@ -1,7 +1,7 @@
-import * as actions from '../../constants/actionTypes.js';
+import * as actions from "../../constants/actionTypes.js";
 
 export const initialState = {
-  movieList: {}
+  movieList: {},
 };
 
 export default function MoviesReducer(state = initialState, action) {
@@ -9,11 +9,11 @@ export default function MoviesReducer(state = initialState, action) {
   switch (type) {
     case actions.GET_MOVIES_REQUEST:
       return {
-        movieList: {}
+        movieList: {},
       };
     case actions.GET_MOVIES_SUCCESS:
       return {
-        movieDetails: payload
+        movieDetails: payload,
       };
     default:
       return state;
