@@ -16,7 +16,6 @@ const styles = {
 function Home() {
   const [movieData, setMovieData] = useState([]);
   const [modalOpen, setModalOpen] = useState(false);
-
   useEffect(() => {
     axios
       .get(url)
