@@ -24,14 +24,15 @@ function MovieList(props) {
   const classes = useStyles();
   const [modalOpen, setModalOpen] = React.useState(false);
   const [movieData, setMovieData] = React.useState([]);
+  const [page, setPage] = React.useState(1);
   const blocklist = useSelector((state) => state.BlocklistReducer.blocklist);
 
   //temp
   const [getMovieData, setGetMovieData] = React.useState([]);
   const [allMovieData, setAllMovieData] = React.useState([]);
-  const [page, setPage] = React.useState(1);
 
   React.useEffect(async () => {
+    //temp get movie data
     await axios
       .get(URL_GET_MOVIES)
       .then((res) => setGetMovieData(res.data.results))
@@ -43,30 +44,29 @@ function MovieList(props) {
       .catch((err) => console.log(err));
   }, []);
 
-  React.useEffect(()=>{
+  React.useEffect(() => {
     setAllMovieData([...allMovieData, ...getMovieData]);
-  },[getMovieData])
+  }, [getMovieData])
 
   React.useEffect(() => {
     retriveMovieData(page);
-  }, [allMovieData,page]);
-
-  React.useEffect(() => {
-    retriveMovieData(page);
-  }, [blocklist]);
+  }, [allMovieData, page,blocklist]);
 
   const retriveMovieData = (page) => {
-    let unblocked = allMovieData.filter((element)=>{return !blocklist.includes(element.id)})
+    let unblocked = allMovieData.filter((element) => { return !blocklist.includes(element.id) })
     console.log(allMovieData);
-    if(unblocked.length>=page*20){
-      let res = unblocked.slice((page-1)*20,page*20)
+    if (unblocked.length >= page * 20) {
+      let res = unblocked.slice((page - 1) * 20, page * 20)
       setMovieData(res);
-  }
+    } else {
+      console.log('send request');
+    }
   }
 
   const handleChangePage = (e, page) => {
     setPage(page);
   };
+
   const handleSortByPopularity = (e) => {
     movieData.sort((a, b) => {
       if (a.title < b.title) return 1;
@@ -98,7 +98,7 @@ function MovieList(props) {
 
   return (
     <div className={classes.contents}>
-      <ButtonGroup className={classes.buttons} size="large" color="primary" aria-label="large outlined primary button group">
+      <ButtonGroup className={classes.buttons} size="large" color="primary">
         <Button variant="contained" color="primary" onClick={handleSortByPopularity}>Sort by Popularity</Button>
         <Button variant="contained" color="primary" onClick={handleSortByName}>Sort by Name</Button>
         <Button variant="contained" color="primary" onClick={handleSortByVotes}>Sort by Views</Button>

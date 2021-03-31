@@ -1,7 +1,7 @@
 import React from "react";
-//mui
-import { 
-  makeStyles, 
+//ui
+import {
+  makeStyles,
   Card,
   CardActionArea,
   CardActions,
@@ -22,6 +22,8 @@ import { addLikes } from "../redux/actions/addLikes";
 import { removeLikes } from "../redux/actions/removeLikes";
 import { addBlocks } from "../redux/actions/addBlocks";
 import { removeBlocks } from "../redux/actions/removeBlocks";
+//constants
+import { URL_MOVIE_IMG } from '../constants/urls';
 
 const useStyles = makeStyles({
   root: {
@@ -64,7 +66,7 @@ const styles = {
 function MovieCard(props) {
   const classes = useStyles();
   const movie = props.movieData;
-  const url = "https://image.tmdb.org/t/p/w500";
+  const url = URL_MOVIE_IMG;
   const likelist = useSelector((state) => state.LikelistReducer.likelist);
   const blocklist = useSelector((state) => state.BlocklistReducer.blocklist);
   const dispatch = useDispatch();
