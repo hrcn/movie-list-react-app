@@ -5,6 +5,7 @@ import axios from "axios";
 import { makeStyles } from "@material-ui/core/styles";
 import { Button, ButtonGroup } from "@material-ui/core";
 import { URL_GET_MOVIES } from '../constants/urls';
+import { useSelector, useDispatch } from "react-redux";
 
 const useStyles = makeStyles((theme) => ({
   contents: {
@@ -23,20 +24,48 @@ function MovieList(props) {
   const classes = useStyles();
   const [modalOpen, setModalOpen] = React.useState(false);
   const [movieData, setMovieData] = React.useState([]);
+  const blocklist = useSelector((state) => state.BlocklistReducer.blocklist);
 
-  React.useEffect(() => {
-    axios
+  //temp
+  const [getMovieData, setGetMovieData] = React.useState([]);
+  const [allMovieData, setAllMovieData] = React.useState([]);
+  const [page, setPage] = React.useState(1);
+
+  React.useEffect(async () => {
+    await axios
       .get(URL_GET_MOVIES)
-      .then((res) => setMovieData(res.data.results))
+      .then((res) => setGetMovieData(res.data.results))
+      .catch((err) => console.log(err));
+
+    await axios
+      .get(`${URL_GET_MOVIES}2`)
+      .then((res) => setGetMovieData(res.data.results))
       .catch((err) => console.log(err));
   }, []);
 
+  React.useEffect(()=>{
+    setAllMovieData([...allMovieData, ...getMovieData]);
+  },[getMovieData])
+
+  React.useEffect(() => {
+    retriveMovieData(page);
+  }, [allMovieData,page]);
+
+  React.useEffect(() => {
+    retriveMovieData(page);
+  }, [blocklist]);
+
+  const retriveMovieData = (page) => {
+    let unblocked = allMovieData.filter((element)=>{return !blocklist.includes(element.id)})
+    console.log(allMovieData);
+    if(unblocked.length>=page*20){
+      let res = unblocked.slice((page-1)*20,page*20)
+      setMovieData(res);
+  }
+  }
+
   const handleChangePage = (e, page) => {
-    let newurl = `${URL_GET_MOVIES}${page}`;
-    axios
-      .get(newurl)
-      .then((res) => setMovieData(res.data.results))
-      .catch((err) => console.log(err));
+    setPage(page);
   };
   const handleSortByPopularity = (e) => {
     movieData.sort((a, b) => {
