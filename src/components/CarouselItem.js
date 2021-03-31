@@ -1,5 +1,7 @@
 import React from "react";
 
+import { useDispatch } from "react-redux";
+
 import { Paper, Typography } from "@material-ui/core";
 
 const styles = {
@@ -31,14 +33,16 @@ const styles = {
   },
 };
 
-function CarouselItem({ element, setModalOpen }) {
+function CarouselItem({ element }) {
+  const dispatch = useDispatch();
+
   let imageUrl = `https://image.tmdb.org/t/p/original`;
 
   return (
     <Paper
       style={styles.paper}
       elevation={0}
-      onClick={() => setModalOpen(true)}
+      onClick={() => dispatch({ type: "OPEN_MODAL" })}
     >
       <img
         style={styles.image}
