@@ -1,5 +1,5 @@
 import React from "react";
-import MovieListBlock from "../components/MovieList";
+import MovieListBlock from "../components/MovieListBlock";
 import axios from "axios";
 import { connect } from "react-redux";
 import { makeStyles } from "@material-ui/core/styles";
@@ -18,7 +18,6 @@ function Like(props) {
   const classes = useStyles();
   const [modalOpen, setModalOpen] = React.useState(false);
   const [movieData, setMovieData] = React.useState([]);
-
   React.useEffect(() => {
     let data = [];
     props.likelist.map((element) => {

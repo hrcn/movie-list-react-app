@@ -1,9 +1,8 @@
 import React from "react";
-import MovieListBlock from "../components/MovieList";
+import MovieListBlock from "../components/MovieListBlock";
 import axios from "axios";
 import { connect } from "react-redux";
 import { makeStyles } from "@material-ui/core/styles";
-// import MovieBlock from ''
 
 let url1 = "https://api.themoviedb.org/3/movie/";
 let url2 = "?api_key=ef30f4e9c750cffe15946a29e54f094e&language=en-US";
