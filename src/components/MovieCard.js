@@ -1,17 +1,23 @@
 import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
-import Card from "@material-ui/core/Card";
-import CardActionArea from "@material-ui/core/CardActionArea";
-import CardActions from "@material-ui/core/CardActions";
-import CardContent from "@material-ui/core/CardContent";
-import CardMedia from "@material-ui/core/CardMedia";
-import Button from "@material-ui/core/Button";
-import Typography from "@material-ui/core/Typography";
+//mui
+import { 
+  makeStyles, 
+  Card,
+  CardActionArea,
+  CardActions,
+  CardContent,
+  CardMedia,
+  Button,
+  Typography,
+} from "@material-ui/core";
+//icons
 import Favorite from "@material-ui/icons/Favorite";
 import BlockIcon from "@material-ui/icons/Block";
 import DeleteIcon from "@material-ui/icons/Delete";
 import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
-import { connect } from "react-redux";
+//redux
+import { useSelector, useDispatch } from "react-redux";
+//actions
 import { addLikes } from "../redux/actions/addLikes";
 import { removeLikes } from "../redux/actions/removeLikes";
 import { addBlocks } from "../redux/actions/addBlocks";
@@ -59,6 +65,10 @@ function MovieCard(props) {
   const classes = useStyles();
   const movie = props.movieData;
   const url = "https://image.tmdb.org/t/p/w500";
+  const likelist = useSelector((state) => state.LikelistReducer.likelist);
+  const blocklist = useSelector((state) => state.BlocklistReducer.blocklist);
+  const dispatch = useDispatch();
+
   if (!movie)
     return (
       <Card className={classes.root}>
@@ -97,26 +107,26 @@ function MovieCard(props) {
       </CardActionArea>
       <CardActions className="buttons" style={styles.animationStyle}>
         <Button size="small" color="primary">
-          {props.likelist.includes(movie.id) ? (
-            <DeleteIcon onClick={() => props.removeLikes(movie.id)} />
+          {likelist.includes(movie.id) ? (
+            <DeleteIcon onClick={() => dispatch(removeLikes(movie.id))} />
           ) : (
             <Favorite
               label="like"
               onClick={() => {
-                props.addLikes(movie.id);
-                props.removeBlocks(movie.id);
+                dispatch(addLikes(movie.id));
+                dispatch(removeBlocks(movie.id));
               }}
             />
           )}
         </Button>
         <Button size="small" color="primary">
-          {props.blocklist.includes(movie.id) ? (
-            <DeleteIcon onClick={() => props.removeBlocks(movie.id)} />
+          {blocklist.includes(movie.id) ? (
+            <DeleteIcon onClick={() => dispatch(removeBlocks(movie.id))} />
           ) : (
             <BlockIcon
               onClick={() => {
-                props.addBlocks(movie.id);
-                props.removeLikes(movie.id);
+                dispatch(addBlocks(movie.id));
+                dispatch(removeLikes(movie.id));
               }}
             />
           )}
@@ -133,20 +143,4 @@ function MovieCard(props) {
   );
 }
 
-const MapStateToProps = (state) => {
-  return {
-    likelist: state.LikelistReducer.likelist,
-    blocklist: state.BlocklistReducer.blocklist,
-  };
-};
-
-const MapDispatchToProps = (dispatch) => {
-  return {
-    addLikes: (id) => dispatch(addLikes(id)),
-    removeLikes: (id) => dispatch(removeLikes(id)),
-    addBlocks: (id) => dispatch(addBlocks(id)),
-    removeBlocks: (id) => dispatch(removeBlocks(id)),
-  };
-};
-
-export default connect(MapStateToProps, MapDispatchToProps)(MovieCard);
+export default MovieCard;

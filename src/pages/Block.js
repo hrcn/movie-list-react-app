@@ -1,11 +1,9 @@
 import React from "react";
 import MovieListBlock from "../components/MovieListBlock";
 import axios from "axios";
-import { connect } from "react-redux";
+import { useSelector } from "react-redux";
 import { makeStyles } from "@material-ui/core/styles";
-
-let url1 = "https://api.themoviedb.org/3/movie/";
-let url2 = "?api_key=ef30f4e9c750cffe15946a29e54f094e&language=en-US";
+import { URL_GET_MOVIE_1, URL_GET_MOVIE_2} from '../constants/urls';
 const useStyles = makeStyles((theme) => ({
   contents: {
     margin: "1rem",
@@ -13,15 +11,16 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function Block(props) {
+function Block() {
   const classes = useStyles();
   const [modalOpen, setModalOpen] = React.useState(false);
   const [movieData, setMovieData] = React.useState([]);
+  const blocklist = useSelector((state) => state.BlocklistReducer.blocklist);
 
   React.useEffect(() => {
     let data = [];
-    props.blocklist.map((element) => {
-      let tempurl = `${url1}${element}${url2}`;
+    blocklist.map((element) => {
+      let tempurl = `${URL_GET_MOVIE_1}${element}${URL_GET_MOVIE_2}`;
       axios
         .get(tempurl)
         .then((res) => {
@@ -33,9 +32,9 @@ function Block(props) {
   }, []);
 
   React.useEffect(() => {
-    let newData = movieData.filter(movie=>props.blocklist.includes(movie.id));
+    let newData = movieData.filter(movie=>blocklist.includes(movie.id));
     setMovieData(newData);
-  }, [props.blocklist]);
+  }, [blocklist]);
 
   return (
     <div className={classes.contents}>
@@ -48,15 +47,4 @@ function Block(props) {
   );
 }
 
-const MapStateToProps = (state) => {
-  return {
-    likelist: state.LikelistReducer.likelist,
-    blocklist: state.BlocklistReducer.blocklist,
-  };
-};
-
-const MapDispatchToProps = (dispatch) => {
-  return {};
-};
-
-export default connect(MapStateToProps, MapDispatchToProps)(Block);
+export default Block;
