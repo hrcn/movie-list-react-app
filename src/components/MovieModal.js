@@ -1,6 +1,7 @@
 import React from "react";
 import axios from "axios";
-
+import { useDispatch } from "react-redux";
+// UI
 import {
   Grid,
   Box,
@@ -69,9 +70,12 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function MovieModal({ currentMovie, modalOpen, setModalOpen }) {
+function MovieModal({ currentMovie, modalOpen }) {
+  const dispatch = useDispatch();
   const classes = useStyles();
+
   let imageUrl = `https://image.tmdb.org/t/p/original`;
+
   // go to Youtube
   const playTrailer = (id) => {
     let trailerUrl = `https://api.themoviedb.org/3/movie/${id}/videos?api_key=ef30f4e9c750cffe15946a29e54f094e&language=en-US`;
@@ -88,7 +92,7 @@ function MovieModal({ currentMovie, modalOpen, setModalOpen }) {
     <Modal
       className={classes.modal}
       open={modalOpen}
-      onClose={() => setModalOpen(false)}
+      onClose={() => dispatch({ type: "CLOSE_MODAL" })}
     >
       <Grid className={classes.gridContainer} container>
         <Grid item xs={4}>
@@ -129,7 +133,7 @@ function MovieModal({ currentMovie, modalOpen, setModalOpen }) {
         </Grid>
         <HighlightOffIcon
           className={classes.closeButton}
-          onClick={() => setModalOpen(false)}
+          onClick={() => dispatch({ type: "CLOSE_MODAL" })}
         />
       </Grid>
     </Modal>
