@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from "react";
-import axios from "axios";
+import React, { useEffect } from "react";
 import MovieCarousel from "../components/MovieCarousel";
+// redux
+import { useSelector, useDispatch } from "react-redux";
+import getCarouselMovie from "../redux/actions/getCarouselMovie";
 // UI
 import { Box } from "@material-ui/core";
-
-let url = `https://api.themoviedb.org/3/discover/movie?api_key=ef30f4e9c750cffe15946a29e54f094e&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1`;
 
 const styles = {
   box: {
@@ -14,13 +14,13 @@ const styles = {
 };
 
 function Home() {
-  const [movieData, setMovieData] = useState([]);
+  const movieData = useSelector(
+    (state) => state.getCarouselMovieReducer.carouselMovieData
+  );
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    axios
-      .get(url)
-      .then((res) => setMovieData(res.data.results))
-      .catch((err) => console.log(err));
+    dispatch(getCarouselMovie());
   }, []);
 
   return (
