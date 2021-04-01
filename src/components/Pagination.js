@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
   },
   inputButton: {
     display: "inline",
-    height: "3rem",
+    height: "2.5rem",
     marginLeft: "1rem",
     "&:hover": {
       background: "#4682B4",
@@ -80,11 +80,13 @@ export default function MVPagination(props) {
         value={inputPage}
         onChange={handleInputChange}
         variant="outlined"
+        size="small"
       />
       <Button
         className={`${classes.inputButton}`}
-        variant="contained"
         onClick={handleClick}
+        variant="outlined" 
+        color="primary"
       >
         Go
       </Button>

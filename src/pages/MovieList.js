@@ -15,6 +15,10 @@ const useStyles = makeStyles(theme => ({
     margin: "1rem",
     display: "flex",
     justifyContent: "center"
+  },
+  button: {
+    width:"15rem",
+    position: "relative",
   }
 }));
 
@@ -83,20 +87,16 @@ function MovieList(props) {
   return (
     <div className={classes.contents}>
       <ButtonGroup className={classes.buttons} size="large" color="primary">
-        <Button
-          variant="contained"
-          color="primary"
-          onClick={handleSortByPopularity}
-        >
+        <Button className={classes.button} onClick={handleSortByPopularity}>
           Sort by Popularity
         </Button>
-        <Button variant="contained" color="primary" onClick={handleSortByName}>
+        <Button className={classes.button} onClick={handleSortByName}>
           Sort by Name
         </Button>
-        <Button variant="contained" color="primary" onClick={handleSortByVotes}>
+        <Button className={classes.button} onClick={handleSortByVotes}>
           Sort by Views
         </Button>
-        <Button variant="contained" color="primary" onClick={handleSortByYear}>
+        <Button className={classes.button} onClick={handleSortByYear}>
           Sort by Year
         </Button>
       </ButtonGroup>

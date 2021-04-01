@@ -27,7 +27,7 @@ import { URL_MOVIE_IMG } from "../constants/urls";
 
 const useStyles = makeStyles({
   root: {
-    width: "21%",
+    width: "23%",
     margin: 10,
     height: 570,
     display: "inline",

@@ -7,16 +7,14 @@ import MovieModal from "./MovieModal";
 import MovieCard from "./MovieCard";
 
 const useStyles = makeStyles(theme => ({
-  movielist: {},
+  movielist: {
+  },
   movie: {
-    height: "2rem",
-    width: "20%"
   }
 }));
 
 export default function MovieListBlock(props) {
   const classes = useStyles();
-
   const movies = props.movies;
   const [currentMovie, setCurrentMovie] = useState({});
   return (

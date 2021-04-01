@@ -13,6 +13,7 @@ import {
 import PlayCircleFilledWhiteOutlinedIcon from "@material-ui/icons/PlayCircleFilledWhiteOutlined";
 import HighlightOffIcon from "@material-ui/icons/HighlightOff";
 import StarIcon from "@material-ui/icons/Star";
+import { IMG_URL_ORG, TRAILER_URL_1, TRAILER_URL_2 } from '../constants/urls';
 
 const useStyles = makeStyles(theme => ({
   modal: {
@@ -47,10 +48,14 @@ const useStyles = makeStyles(theme => ({
     }
   },
   trailerTypography: {
-    margin: theme.spacing(2)
+    margin: theme.spacing(2),
+  },
+  overviewTypography: {
+    margin: theme.spacing(10),
+    textAlign: "justify",
   },
   detailBox: {
-    margin: theme.spacing(5)
+    margin: theme.spacing(1)
   },
   closeButton: {
     position: "absolute",
@@ -74,11 +79,11 @@ function MovieModal({ currentMovie, modalOpen }) {
   const dispatch = useDispatch();
   const classes = useStyles();
 
-  let imageUrl = `https://image.tmdb.org/t/p/original`;
+  let imageUrl = IMG_URL_ORG;
 
   // go to Youtube
   const playTrailer = id => {
-    let trailerUrl = `https://api.themoviedb.org/3/movie/${id}/videos?api_key=ef30f4e9c750cffe15946a29e54f094e&language=en-US`;
+    let trailerUrl = `${TRAILER_URL_1}${id}${TRAILER_URL_2}`;
     axios
       .get(trailerUrl)
       .then(res =>
@@ -120,7 +125,7 @@ function MovieModal({ currentMovie, modalOpen }) {
           <Typography className={classes.detailTypography}>
             Release Date: {currentMovie.release_date}
           </Typography>
-          <Typography className={classes.detailTypography}>
+          <Typography className={classes.overviewTypography}>
             {currentMovie.overview}
           </Typography>
           <Box className={classes.detailBox}>
