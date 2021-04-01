@@ -1,62 +1,45 @@
 import React from "react";
 import MovieListBlock from "../components/MovieListBlock";
-import axios from "axios";
-import { connect } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { makeStyles } from "@material-ui/core/styles";
-
-let url1 = "https://api.themoviedb.org/3/movie/";
-let url2 = "?api_key=ef30f4e9c750cffe15946a29e54f094e&language=en-US";
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
   contents: {
     margin: "1rem",
-    display: "inline",
-  },
+    display: "inline"
+  }
 }));
 
-function Block(props) {
+function Block() {
   const classes = useStyles();
-  const [modalOpen, setModalOpen] = React.useState(false);
+  const dispatch = useDispatch();
+
   const [movieData, setMovieData] = React.useState([]);
+  const [movies, setMovies] = React.useState([]);
+
+  const modalOpen = useSelector(state => state.modalReducer.modalOpen);
+  const blocklist = useSelector(state => state.BlocklistReducer.blocklist);
+  const allMoviesData = useSelector(
+    state => state.getMoviesReducer.allMoviesData
+  );
 
   React.useEffect(() => {
-    let data = [];
-    props.blocklist.map((element) => {
-      let tempurl = `${url1}${element}${url2}`;
-      axios
-        .get(tempurl)
-        .then((res) => {
-          data = [...data, res.data];
-          setMovieData(data);
-        })
-        .catch((err) => console.log(err));
-    });
+    setMovies(allMoviesData.filter(movie => blocklist.includes(movie.id)));
   }, []);
 
   React.useEffect(() => {
-    let newData = movieData.filter(movie=>props.blocklist.includes(movie.id));
+    let newData = movieData.filter(movie => blocklist.includes(movie.id));
     setMovieData(newData);
-  }, [props.blocklist]);
+  }, [blocklist]);
+
+  React.useEffect(() => {
+    setMovieData(movies);
+  }, [movies]);
 
   return (
     <div className={classes.contents}>
-      <MovieListBlock
-        movies={movieData}
-        modalOpen={modalOpen}
-        setModalOpen={setModalOpen}
-      />
+      <MovieListBlock movies={movieData} modalOpen={modalOpen} />
     </div>
   );
 }
 
-const MapStateToProps = (state) => {
-  return {
-    likelist: state.LikelistReducer.likelist,
-    blocklist: state.BlocklistReducer.blocklist,
-  };
-};
-
-const MapDispatchToProps = (dispatch) => {
-  return {};
-};
-
-export default connect(MapStateToProps, MapDispatchToProps)(Block);
+export default Block;

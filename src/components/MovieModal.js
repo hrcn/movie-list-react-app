@@ -8,20 +8,21 @@ import {
   Modal,
   Typography,
   IconButton,
-  makeStyles,
+  makeStyles
 } from "@material-ui/core";
 import PlayCircleFilledWhiteOutlinedIcon from "@material-ui/icons/PlayCircleFilledWhiteOutlined";
 import HighlightOffIcon from "@material-ui/icons/HighlightOff";
 import StarIcon from "@material-ui/icons/Star";
+import { IMG_URL_ORG, TRAILER_URL_1, TRAILER_URL_2 } from '../constants/urls';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
   modal: {
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "rgba(0, 0, 0, 0.7)",
     color: "orange",
-    padding: theme.spacing(20),
+    padding: theme.spacing(20)
   },
   gridContainer: {
     position: "relative",
@@ -32,25 +33,29 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: "rgba(0, 0, 0, 0.9)",
     padding: theme.spacing(15),
     "&:focus": {
-      outline: "none",
-    },
+      outline: "none"
+    }
   },
   trailerBox: {
     display: "flex",
-    flexDirection: "column",
+    flexDirection: "column"
   },
   trailerButton: {
     color: "white",
     transform: "scale(2)",
     "&:hover": {
-      textDecoration: "underline",
-    },
+      textDecoration: "underline"
+    }
   },
   trailerTypography: {
     margin: theme.spacing(2),
   },
-  detailTypography: {
-    margin: theme.spacing(5),
+  overviewTypography: {
+    margin: theme.spacing(10),
+    textAlign: "justify",
+  },
+  detailBox: {
+    margin: theme.spacing(1)
   },
   closeButton: {
     position: "absolute",
@@ -60,28 +65,28 @@ const useStyles = makeStyles((theme) => ({
     transform: "scale(2)",
     cursor: "pointer",
     "&:hover": {
-      color: "red",
-    },
+      color: "red"
+    }
   },
   ratingBox: {
     display: "flex",
     justifyContent: "center",
-    alignItems: "center",
-  },
+    alignItems: "center"
+  }
 }));
 
 function MovieModal({ currentMovie, modalOpen }) {
   const dispatch = useDispatch();
   const classes = useStyles();
 
-  let imageUrl = `https://image.tmdb.org/t/p/original`;
+  let imageUrl = IMG_URL_ORG;
 
   // go to Youtube
-  const playTrailer = (id) => {
-    let trailerUrl = `https://api.themoviedb.org/3/movie/${id}/videos?api_key=ef30f4e9c750cffe15946a29e54f094e&language=en-US`;
+  const playTrailer = id => {
+    let trailerUrl = `${TRAILER_URL_1}${id}${TRAILER_URL_2}`;
     axios
       .get(trailerUrl)
-      .then((res) =>
+      .then(res =>
         window.open(
           `https://www.youtube.com/watch?v=${res.data.results[0].key}`
         )
@@ -120,16 +125,16 @@ function MovieModal({ currentMovie, modalOpen }) {
           <Typography className={classes.detailTypography}>
             Release Date: {currentMovie.release_date}
           </Typography>
-          <Typography className={classes.detailTypography}>
+          <Typography className={classes.overviewTypography}>
             {currentMovie.overview}
           </Typography>
-          <Typography className={classes.detailTypography}>
+          <Box className={classes.detailBox}>
             <Box className={classes.ratingBox}>
               <StarIcon style={{ marginRight: "1rem" }} />
               {currentMovie.vote_average} / 10 from {currentMovie.vote_count}{" "}
               votes
             </Box>
-          </Typography>
+          </Box>
         </Grid>
         <HighlightOffIcon
           className={classes.closeButton}
