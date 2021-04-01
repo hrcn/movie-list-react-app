@@ -8,7 +8,7 @@ import {
   CardContent,
   CardMedia,
   Button,
-  Typography,
+  Typography
 } from "@material-ui/core";
 //icons
 import Favorite from "@material-ui/icons/Favorite";
@@ -23,7 +23,7 @@ import { removeLikes } from "../redux/actions/removeLikes";
 import { addBlocks } from "../redux/actions/addBlocks";
 import { removeBlocks } from "../redux/actions/removeBlocks";
 //constants
-import { URL_MOVIE_IMG } from '../constants/urls';
+import { URL_MOVIE_IMG } from "../constants/urls";
 
 const useStyles = makeStyles({
   root: {
@@ -33,43 +33,45 @@ const useStyles = makeStyles({
     display: "inline",
     float: "left",
     "& .area": {
-      height: 550,
+      height: 550
     },
     "& .buttons": {
       display: "inline-block",
       transform: "translateY(100%)",
-      height: 50,
+      height: 50
     },
     "& .texts": {
-      height: 200,
+      height: 200
     },
     "&:hover": {
       "& .area": {
-        transform: "translateY(-50%)",
+        transform: "translateY(-50%)"
       },
       "& .buttons": {
-        transform: "translateY(-50%)",
-      },
-    },
+        transform: "translateY(-50%)"
+      }
+    }
   },
   media: {
-    height: 400,
-  },
+    height: 400
+  }
 });
 
 const styles = {
   animationStyle: {
-    transitionDuration: "1s",
-  },
+    transitionDuration: "1s"
+  }
 };
 
 function MovieCard(props) {
   const classes = useStyles();
+  const dispatch = useDispatch();
+
   const movie = props.movieData;
   const url = URL_MOVIE_IMG;
-  const likelist = useSelector((state) => state.LikelistReducer.likelist);
-  const blocklist = useSelector((state) => state.BlocklistReducer.blocklist);
-  const dispatch = useDispatch();
+
+  const likelist = useSelector(state => state.LikelistReducer.likelist);
+  const blocklist = useSelector(state => state.BlocklistReducer.blocklist);
 
   if (!movie)
     return (
@@ -89,7 +91,7 @@ function MovieCard(props) {
         className="area"
         style={styles.animationStyle}
         onClick={() => {
-          props.setModalOpen(true);
+          dispatch({ type: "OPEN_MODAL" });
           props.setCurrentMovie(movie);
         }}
       >
@@ -136,7 +138,7 @@ function MovieCard(props) {
         <Button
           size="small"
           color="primary"
-          onClick={() => props.setModalOpen(true)}
+          onClick={() => dispatch({ type: "OPEN_MODAL" })}
         >
           <MoreHorizIcon />
         </Button>
