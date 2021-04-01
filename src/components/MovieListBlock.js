@@ -19,7 +19,6 @@ export default function MovieListBlock(props) {
 
   const movies = props.movies;
   const [currentMovie, setCurrentMovie] = useState({});
-  // const BlockList = [];
   return (
     <Container className={classes.movielist}>
       {movies.map(element => (

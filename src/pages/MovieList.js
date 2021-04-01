@@ -1,12 +1,10 @@
 import React from "react";
 import Pagination from "../components/Pagination";
 import MovieListBlock from "../components/MovieListBlock";
-import axios from "axios";
 import { makeStyles } from "@material-ui/core/styles";
 import { Button, ButtonGroup } from "@material-ui/core";
-import { URL_GET_MOVIES } from "../constants/urls";
 import { useSelector, useDispatch } from "react-redux";
-
+import getMoviesByPage from "../redux/actions/getMoviesByPage";
 const useStyles = makeStyles(theme => ({
   contents: {
     margin: "1rem",
@@ -24,45 +22,28 @@ function MovieList(props) {
   const classes = useStyles();
   const [movieData, setMovieData] = React.useState([]);
   const [page, setPage] = React.useState(1);
-
   const blocklist = useSelector(state => state.BlocklistReducer.blocklist);
   const modalOpen = useSelector(state => state.modalReducer.modalOpen);
+  const allMoviesData = useSelector(state => state.getMoviesReducer.allMoviesData);
+  const allMoviesDataPage = useSelector(state => state.getMoviesReducer.page);
+  const dispatch = useDispatch();
 
-  //temp
-  const [getMovieData, setGetMovieData] = React.useState([]);
-  const [allMovieData, setAllMovieData] = React.useState([]);
-
-  React.useEffect(async () => {
-    //temp get movie data
-    await axios
-      .get(URL_GET_MOVIES)
-      .then(res => setGetMovieData(res.data.results))
-      .catch(err => console.log(err));
-
-    await axios
-      .get(`${URL_GET_MOVIES}2`)
-      .then(res => setGetMovieData(res.data.results))
-      .catch(err => console.log(err));
+  React.useEffect(() => {
   }, []);
 
   React.useEffect(() => {
-    setAllMovieData([...allMovieData, ...getMovieData]);
-  }, [getMovieData]);
-
-  React.useEffect(() => {
     retriveMovieData(page);
-  }, [allMovieData, page, blocklist]);
+  }, [allMoviesData, page, blocklist]);
 
   const retriveMovieData = page => {
-    let unblocked = allMovieData.filter(element => {
+    let unblocked = allMoviesData.filter(element => {
       return !blocklist.includes(element.id);
     });
-    console.log(allMovieData);
     if (unblocked.length >= page * 20) {
       let res = unblocked.slice((page - 1) * 20, page * 20);
       setMovieData(res);
     } else {
-      console.log("send request");
+      dispatch(getMoviesByPage(allMoviesDataPage + 1));
     }
   };
 

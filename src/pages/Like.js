@@ -1,9 +1,7 @@
 import React from "react";
 import MovieListBlock from "../components/MovieListBlock";
-import axios from "axios";
 import { makeStyles } from "@material-ui/core/styles";
 import { useSelector } from "react-redux";
-import { URL_GET_MOVIE_1, URL_GET_MOVIE_2} from '../constants/urls';
 
 const useStyles = makeStyles((theme) => ({
   contents: {
@@ -16,25 +14,22 @@ function Like() {
   const classes = useStyles();
   const [modalOpen, setModalOpen] = React.useState(false);
   const [movieData, setMovieData] = React.useState([]);
+  const [movies, setMovies] = React.useState([]);
   const likelist = useSelector((state) => state.LikelistReducer.likelist);
+  const allMoviesData = useSelector(state => state.getMoviesReducer.allMoviesData);
+
   React.useEffect(() => {
-    let data = [];
-    likelist.map((element) => {
-      let tempurl = `${URL_GET_MOVIE_1}${element}${URL_GET_MOVIE_2}`;
-      axios
-        .get(tempurl)
-        .then((res) => {
-          data = [...data, res.data];
-          setMovieData(data);
-        })
-        .catch((err) => console.log(err));
-    });
+    setMovies(allMoviesData.filter(movie=>likelist.includes(movie.id)))
   }, []);
 
   React.useEffect(() => {
     let newData = movieData.filter(movie=>likelist.includes(movie.id));
     setMovieData(newData);
   }, [likelist]);
+
+  React.useEffect(() => {
+    setMovieData(movies);
+  }, [movies]);
 
   return (
     <div className={classes.contents}>

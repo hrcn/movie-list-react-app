@@ -17,6 +17,7 @@ function Home() {
   const movieData = useSelector(
     (state) => state.getCarouselMovieReducer.carouselMovieData
   );
+  
   const dispatch = useDispatch();
 
   useEffect(() => {
