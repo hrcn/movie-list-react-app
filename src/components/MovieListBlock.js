@@ -7,10 +7,8 @@ import MovieModal from "./MovieModal";
 import MovieCard from "./MovieCard";
 
 const useStyles = makeStyles(theme => ({
-  movielist: {
-  },
-  movie: {
-  }
+  movielist: {},
+  movie: {}
 }));
 
 export default function MovieListBlock(props) {
